@@ -161,5 +161,75 @@ public class Client {
         6 minutes of break
          */
 
+        Collections.sort(ls, new Comparator<String>() {
+            @Override
+            public int compare(String s, String t1) {
+                if(t1.compareTo(s) > 0){
+                    return 1;
+                }else{
+                    return -1;
+                }
+                /*
+                Merge sort
+                merge function
+                while(){
+                    if(a < b){
+                        //keep a in the final list
+                     }else{
+                        //keep b in the final list
+
+                      }
+                  }
+                 */
+                /*
+                s,t1
+                t1 > s , t1 to come first
+
+                 */
+            }
+        });
+        System.out.println("List below is :- ");
+        System.out.println(ls);
+        Student std1 = new Student("Umang", 29, "ABC");
+        Student std2 = new Student("Sahil", 10, "XYZ");
+
+        Student std3 = new Student("Tripti", 29, "AZC");
+
+        List<Student> ls5  = new ArrayList<>();
+
+        ls5.add(std1);
+        ls5.add(std2);
+        ls5.add(std3);
+
+        Collections.sort(ls5, new StudentUniversityNameComparator());
+
+        for(Student student: ls5){
+            System.out.println(student.name + " " + student.psp + " " + student.universityName);
+        }
+
+        /*
+        I want to have one more custom sorting
+        sort as per university name, if same, psp
+         */
+//        String a = "umang";
+//        String b = "Tripti";
+//
+//        System.out.println(b.compareTo(a));
+        //You have to define natural ordering of Students
+
+        /*
+        Lambda function - you can syntactically sugar coat your code
+         */
     }
+    /*
+    Comparator can be passed in second param in sort method
+    for custom sorting
+     */
+
+
+
+
+
+
 }
+
