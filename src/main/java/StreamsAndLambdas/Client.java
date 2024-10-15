@@ -1,9 +1,8 @@
 package StreamsAndLambdas;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Client {
     /*
@@ -130,6 +129,152 @@ public class Client {
         Break of 7 minutes
          */
 
+        /*
+        Streams - like a pipeline
+        Pipeline attached a data source.
 
+        Print 1000 rows
+        for(int i = 1 ; i <= 1000 ; i++){
+            if(i == 500th){
+                ...
+            }
+         }
+
+         Streams does affect the performance of the code on the positive side
+         Streams are very smart and they use internal data structures to optimize things on their own.
+
+         */
+
+        List<Integer> ls2 = List.of(2,5,3,10,8,9,1);
+        List<Integer> ls3 = List.of(1,5,7,9);
+
+        Stream<Integer> s1 = ls2.stream();
+        Stream<Integer> s2 = ls2.stream();
+        Stream<Integer> s3 = ls2.stream();
+
+        /*
+        s1 is nothing but a pipeline attched to the list
+        It's actually the stream reference
+         */
+
+        System.out.println(s1);
+        /*
+        There are methods using which you can read data from the stream.
+        Intermediate - returns the stream reference
+        Terminal - returns the data and after which the stream is closed. (the last method on a stream)
+        Streams can be operated at max once.
+         */
+
+        //System.out.println(s1.limit(3).count());
+        //System.out.println(s2.limit(2));
+        //System.out.println(s3.count());
+        /*
+        You can have as many methods you want on top of stream
+         */
+
+//        for(int i = 0 ; i < ls2.size();  i++){
+//            System.out.println(ls2.get(i));
+//        }
+        /*
+        You can use lamda expressions inside stream
+         */
+        s1.forEach((elem) -> System.out.print(elem + " "));
+//        System.out.println(s1.count()); You have operated already on s1
+
+
+        /*
+        map, filter, sort, reduce - They help you reduce lots of lines of code.
+         */
+
+        System.out.println();
+        List<Integer> res = ls2.
+                stream().
+                filter((elem) -> elem % 2 == 0).
+                collect(Collectors.toList());
+
+        System.out.println(ls2);
+        System.out.println(res);
+
+        List<Integer> res2 = ls2.
+                stream().
+                filter((elem) -> elem % 2 == 0).
+                map((elem) -> elem * elem).
+                sorted((a, b) -> b - a ).
+                collect(Collectors.toList());
+
+        //res2.get(0);
+
+        System.out.println(res2);
+        /*
+        Even I don't know the internal working of streams.
+        findFirst
+         */
+
+        Optional<Integer> res4 = ls3.
+                stream().
+                filter((elem) -> elem % 2 == 0).
+                map((elem) -> elem * elem).
+                sorted((a, b) -> b - a).
+                findFirst();
+
+        if(res4.isEmpty()){
+            System.out.println("All elements were odd");
+        }else{
+            System.out.println(res4.get());
+        }
+
+        /*
+        reduce method
+
+         */
+
+        Integer sum = 0;
+        for(int i = 0 ; i < ls3.size(); i++){
+            sum = sum + ls3.get(i);
+        }
+
+        System.out.println(sum);
+
+
+        Integer sum2 = ls3.
+                stream().
+                filter((elem ) -> (elem & 1) == 1). //1,3,7,9
+                map((elem) -> elem*elem*elem). //1,27,343,729 = 1198
+                reduce(0, (a, b) -> a + b);
+
+
+        Integer ans2 = ls3.
+                stream().
+                filter((elem ) -> (elem & 1) == 1). //1,3,7,9
+                        map((elem) -> elem*elem*elem). //1,27,343,729 = 1198
+                        reduce(Integer.MIN_VALUE, (a, b) -> Math.max(a,b));
+        System.out.println(ans2);
+
+        System.out.println(sum2);
+        Integer ans = Integer.MAX_VALUE;
+
+        System.out.println(ls3.stream().reduce(Integer.MIN_VALUE, (a, b) -> Math.max(a,b)));
+
+        /*
+        (a,b)
+
+         */
+        /*
+        List.Of()
+         */
+
+        List<Integer> ls6 = new ArrayList<>(List.of(1,4,5));
+        //ls6.add(1);
+
+// Sorting with proper comparisond 
+        Collections.sort(ls6, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer integer, Integer t1) {
+                return integer.compareTo(t1);  // Ascending order
+            }
+        });
+
+
+        System.out.println(ls6);
     }
 }
